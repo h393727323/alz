@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code 生成器</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .qr-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #dee2e6;
+        }
+        
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+        
+        .content-display {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            color: #495057;
+        }
+        
+        .no-content {
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎫 QR Code 生成器</h1>
+        
+        <div id="status"></div>
+        
+        <div class="qr-container">
+            <div id="qrcode"></div>
+        </div>
+        
+        <div id="content-info"></div>
+    </div>
+
+    <script>
+        // 使用可靠的在线 API 生成真正可扫描的 QR 码
+        function generateRealQRCode(text) {
+            const qrContainer = document.getElementById('qrcode');
+            const statusDiv = document.getElementById('status');
+            
+            // 优先使用最稳定的 QR 码 API，使用自定义颜色
+            const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(text)}&ecc=M&color=48742B&bgcolor=FFFFFF`;
+            
+            const img = document.createElement('img');
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            img.style.border = '2px solid #dee2e6';
+            img.style.borderRadius = '10px';
+            img.alt = 'QR Code';
+            img.crossOrigin = 'anonymous'; // 尝试解决跨域问题
+            
+            img.onload = function() {
+                qrContainer.innerHTML = '';
+                qrContainer.appendChild(img);
+                statusDiv.innerHTML = '<div class="success">✅ 真实可扫描的 QR 码生成成功！</div>';
+                
+                // 添加成功提示
+                const note = document.createElement('div');
+                note.style.cssText = 'margin-top: 15px; padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; font-size: 14px; color: #155724;';
+                note.innerHTML = `
+                    <div style="margin-bottom: 10px;">📱 <strong>真实 QR 码 - 可以扫描！</strong></div>
+                    <div style="font-size: 12px; color: #666;">
+                        • 使用专业 QR 码生成服务<br>
+                        • 符合国际 QR 码标准<br>
+                        • 任何扫码应用都可识别<br>
+                        • 内容: <code>${text}</code>
+                    </div>
+                `;
+                qrContainer.appendChild(note);
+            };
+            
+            img.onerror = function() {
+                console.log('在线 QR 码 API 失败，使用本地方案...');
+                generateLocalFallback(text);
+            };
+            
+            img.src = apiUrl;
+        }
+        
+        // 本地备用方案：简化版 QR 码实现
+        function generateLocalFallback(text) {
+            const qrContainer = document.getElementById('qrcode');
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                // 创建一个真正的 QR 码样式（简化但更接近标准）
+                const canvas = document.createElement('canvas');
+                const size = 300;
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // 背景
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, size, size);
+                
+                const moduleSize = 10;
+                const modules = Math.floor(size / moduleSize);
+                
+                // 生成基于内容的伪随机模式
+                const generatePattern = (text) => {
+                    const pattern = [];
+                    for (let i = 0; i < modules; i++) {
+                        pattern[i] = [];
+                        for (let j = 0; j < modules; j++) {
+                            // 使用字符串内容生成确定性的模式
+                            const seed = (text.charCodeAt(i % text.length) + 
+                                        text.charCodeAt(j % text.length) + 
+                                        i * j) % 3;
+                            pattern[i][j] = seed > 0 ? 1 : 0;
+                        }
+                    }
+                    return pattern;
+                };
+                
+                const pattern = generatePattern(text);
+                
+                // 绘制 QR 码 - 使用深绿色
+                ctx.fillStyle = '#48742B';
+                for (let i = 0; i < modules; i++) {
+                    for (let j = 0; j < modules; j++) {
+                        // 保留定位图案区域
+                        const isFinderArea = (
+                            (i < 9 && j < 9) ||
+                            (i < 9 && j >= modules - 9) ||
+                            (i >= modules - 9 && j < 9)
+                        );
+                        
+                        if (!isFinderArea && pattern[i][j]) {
+                            ctx.fillRect(j * moduleSize, i * moduleSize, moduleSize - 1, moduleSize - 1);
+                        }
+                    }
+                }
+                
+                // 添加定位图案 - 使用深绿色
+                const drawFinder = (startX, startY) => {
+                    // 外框 - 深绿色
+                    ctx.fillStyle = '#48742B';
+                    ctx.fillRect(startX * moduleSize, startY * moduleSize, 7 * moduleSize, 7 * moduleSize);
+                    // 内部白色
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect((startX + 1) * moduleSize, (startY + 1) * moduleSize, 5 * moduleSize, 5 * moduleSize);
+                    // 中心深绿色
+                    ctx.fillStyle = '#48742B';
+                    ctx.fillRect((startX + 2) * moduleSize, (startY + 2) * moduleSize, 3 * moduleSize, 3 * moduleSize);
+                    // 再次内部白色
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect((startX + 3) * moduleSize, (startY + 3) * moduleSize, 1 * moduleSize, 1 * moduleSize);
+                    // 最终中心深绿色点
+                    ctx.fillStyle = '#48742B';
+                    ctx.fillRect((startX + 3) * moduleSize, (startY + 3) * moduleSize, 1 * moduleSize, 1 * moduleSize);
+                };
+                
+                drawFinder(0, 0);
+                drawFinder(modules - 7, 0);
+                drawFinder(0, modules - 7);
+                
+                // 时序图案 - 使用深绿色
+                ctx.fillStyle = '#48742B';
+                for (let i = 8; i < modules - 8; i++) {
+                    if (i % 2 === 0) {
+                        ctx.fillRect(i * moduleSize, 6 * moduleSize, moduleSize - 1, moduleSize - 1);
+                        ctx.fillRect(6 * moduleSize, i * moduleSize, moduleSize - 1, moduleSize - 1);
+                    }
+                }
+                
+                canvas.style.border = '2px solid #dee2e6';
+                canvas.style.borderRadius = '10px';
+                canvas.style.maxWidth = '100%';
+                canvas.style.height = 'auto';
+                
+                qrContainer.innerHTML = '';
+                qrContainer.appendChild(canvas);
+                statusDiv.innerHTML = '<div style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 10px;">⚠️ 本地模式 - 仅供测试显示</div>';
+                
+                // 添加说明
+                const note = document.createElement('div');
+                note.style.cssText = 'margin-top: 15px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; font-size: 14px; color: #856404;';
+                note.innerHTML = `
+                    <div style="margin-bottom: 10px;">🔧 <strong>本地测试模式</strong></div>
+                    <div style="font-size: 12px; color: #666;">
+                        • 这是简化的本地实现<br>
+                        • 可能无法被扫码器识别<br>
+                        • 建议使用在线模式获得真实 QR 码<br>
+                        • 内容: <code>${text}</code>
+                    </div>
+                `;
+                qrContainer.appendChild(note);
+                
+            } catch (error) {
+                console.error('本地 QR 码生成失败:', error);
+                generateTextOnlyDisplay(text);
+            }
+        }
+        
+        // 纯文本显示备用方案
+        function generateTextOnlyDisplay(text) {
+            const qrContainer = document.getElementById('qrcode');
+            const statusDiv = document.getElementById('status');
+            
+            qrContainer.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; border: 2px solid #6c757d; text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">📋</div>
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #333;">
+                        QR 码内容
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; font-family: 'Courier New', monospace; word-break: break-all; color: #495057; border: 2px dashed #6c757d;">
+                        ${text}
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: #e2e3e5; border-radius: 8px; font-size: 13px; color: #383d41;">
+                        💡 请复制上方内容，使用专业的 QR 码生成器
+                    </div>
+                </div>
+            `;
+            
+            statusDiv.innerHTML = '<div style="background: #e2e3e5; color: #383d41; padding: 15px; border-radius: 10px;">ℹ️ 文本显示模式</div>';
+        }
+        
+
+        
+        function getQueryParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const allParams = {};
+            
+            // 获取所有查询参数
+            for (const [key, value] of urlParams) {
+                allParams[key] = value;
+            }
+            
+            // 如果没有键值对参数，尝试获取整个查询字符串（不包括?）
+            if (Object.keys(allParams).length === 0) {
+                const queryString = window.location.search.substring(1);
+                if (queryString) {
+                    return queryString;
+                }
+            } else {
+                // 如果有键值对参数，将它们格式化为字符串
+                return Object.entries(allParams)
+                    .map(([key, value]) => `${key}=${value}`)
+                    .join('&');
+            }
+            
+            return null;
+        }
+        
+        function generateQRCode(content) {
+            const qrContainer = document.getElementById('qrcode');
+            const statusDiv = document.getElementById('status');
+            const contentDiv = document.getElementById('content-info');
+            
+            // 清空之前的内容
+            qrContainer.innerHTML = '';
+            statusDiv.innerHTML = '';
+            contentDiv.innerHTML = '';
+            
+            if (!content) {
+                qrContainer.innerHTML = '<div class="no-content">请在 URL 后添加查询参数<br>例如: qr.html?hello=world 或 qr.html?your-content</div>';
+                statusDiv.innerHTML = '<div class="error">❌ 未检测到查询参数</div>';
+                return;
+            }
+            
+            // 显示要生成 QR 码的内容
+            contentDiv.innerHTML = `
+                <div class="content-display">
+                    <strong>QR 码内容:</strong><br>
+                    ${content}
+                </div>
+            `;
+            
+            statusDiv.innerHTML = '<div class="success">✅ 正在生成真实可扫描的 QR 码...</div>';
+            
+            // 优先使用在线 API 生成真正可扫描的 QR 码
+            generateRealQRCode(content);
+        }
+        
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const content = getQueryParams();
+            generateQRCode(content);
+            
+            // 显示当前 URL 信息
+            console.log('当前 URL:', window.location.href);
+            console.log('查询参数内容:', content || '无');
+        });
+        
+        // 监听 URL 变化（用于单页应用场景）
+        window.addEventListener('popstate', function() {
+            const content = getQueryParams();
+            generateQRCode(content);
+        });
+    </script>
+</body>
+</html>
