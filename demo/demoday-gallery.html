@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Demo Zoo</title>
+    <title>Demo Day</title>
     <style>
         * {
             margin: 0;
@@ -38,7 +38,7 @@
         }
         
         .app-header .title {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: 600;
             flex: 1;
             text-align: center;
@@ -56,7 +56,7 @@
             padding: 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
         
         .activity-card {
@@ -75,122 +75,80 @@
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
         }
         
-        .activity-card::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -8px;
-            width: 16px;
-            height: 16px;
-            background: #f8f9fa;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 2;
-        }
-        
-        .activity-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: -8px;
-            width: 16px;
-            height: 16px;
-            background: #f8f9fa;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 2;
-        }
+
         
         .card-header {
-            background: linear-gradient(135deg, #345420 0%, #6aaa3e 100%);
-            color: white;
-            padding: 20px 16px;
+            background: white;
+            color: #333;
+            padding: 14px 16px;
             position: relative;
+            border-bottom: 1px solid #f0f0f0;
         }
         
-        .card-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #345420, #6aaa3e);
-        }
-        
-        .event-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #ff6b6b;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 1;
-            z-index: 3;
-        }
+
         
         .status-badge-top {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 8px;
+            right: 8px;
             z-index: 3;
         }
         
         .status-badge-top .status-completed,
         .status-badge-top .status-upcoming {
-            background: #28a745;
-            color: white;
+            background: rgba(123, 185, 70, 0.12);
+            color: #5a8d32;
             padding: 4px 8px;
             border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 500;
             display: inline-block;
             line-height: 1;
+            border: 1px solid rgba(123, 185, 70, 0.2);
         }
         
         .status-badge-top .status-upcoming {
-            background: #ffc107;
+            background: rgba(106, 170, 62, 0.12);
+            color: #6aaa3e;
+            border: 1px solid rgba(106, 170, 62, 0.2);
         }
         
         .event-number {
-            font-size: 24px;
+            font-size: 21px;
             font-weight: 700;
             margin-bottom: 8px;
+            color: #5a8d32;
         }
         
         .event-theme {
-            font-size: 14px;
-            color: #d0d0d0;
+            font-size: 16px;
+            color: #666;
             margin-bottom: 10px;
             font-weight: 400;
             line-height: 1.4;
-            opacity: 0.9;
         }
         
         .event-organizer {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 12px;
-            color: #d0d0d0;
+            font-size: 14px;
+            color: #888;
             margin-bottom: 0;
-            opacity: 0.9;
         }
         
         .organizer-icon {
             width: 14px;
             height: 14px;
-            fill: currentColor;
+            fill: #7bb946;
+            opacity: 0.8;
         }
         
         .event-details {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 6px;
+            margin-top: 8px;
         }
         
         .detail-item {
@@ -198,20 +156,50 @@
             align-items: center;
             gap: 8px;
             color: #666;
-            font-size: 13px;
+            font-size: 15px;
         }
         
         .detail-icon {
             width: 16px;
             height: 16px;
-            fill: #5a8d32;
+            fill: #7bb946;
             flex-shrink: 0;
+            opacity: 0.7;
         }
         
         .card-body {
-            padding: 12px 16px;
-            padding-bottom: 50px;
+            padding: 8px 16px;
+            padding-bottom: 12px;
             position: relative;
+        }
+        
+        .view-details-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: rgba(123, 185, 70, 0.08);
+            border: 1px solid rgba(123, 185, 70, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .view-details-icon:active {
+            background: rgba(123, 185, 70, 0.15);
+            transform: scale(0.95);
+        }
+        
+        .view-details-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: #7bb946;
+            opacity: 0.9;
         }
         
         .card-body::before {
@@ -236,7 +224,7 @@
         
         .info-value {
             color: #333;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -252,7 +240,7 @@
         
         .speakers-preview {
             display: flex;
-            margin-top: 12px;
+            margin-top: 8px;
         }
         
         .speaker-avatar {
@@ -283,29 +271,7 @@
             z-index: 1;
         }
         
-        .view-details {
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
-            color: #5a8d32;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 6px 12px;
-            background: rgba(90, 141, 50, 0.08);
-            border-radius: 16px;
-            border: 1px solid rgba(90, 141, 50, 0.15);
-            transition: all 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .view-details:active {
-            background: rgba(90, 141, 50, 0.15);
-            transform: scale(0.96);
-        }
+
         
         /* 底部安全区域 */
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
@@ -369,7 +335,7 @@
         }
         
         .tab-text {
-            font-size: 12px;
+            font-size: 14px;
             color: #999;
             font-weight: 500;
             transition: color 0.2s ease;
@@ -387,7 +353,7 @@
 <body>
     <!-- 顶部导航栏 -->
     <div class="app-header">
-        <div class="title">Demo Zoo</div>
+        <div class="title">Demo Day</div>
         <svg class="menu-btn" viewBox="0 0 24 24" fill="white">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
         </svg>
@@ -396,7 +362,6 @@
     <div class="gallery-container">
         <!-- Demo Day 第7期 -->
         <div class="activity-card" onclick="window.location.href='demoday7.html'">
-            <div class="event-badge">最新</div>
             <div class="status-badge-top">
                 <span class="status-upcoming">即将开始</span>
             </div>
@@ -434,9 +399,11 @@
                     </div>
                 </div>
                 
-                <a href="demoday-detail.html" class="view-details">
-                    查看详情 →
-                </a>
+                <div class="view-details-icon" onclick="window.location.href='demoday-detail.html'; event.stopPropagation();">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                </div>
             </div>
         </div>
         
@@ -479,9 +446,11 @@
                     </div>
                 </div>
                 
-                <a href="demoday6.html" class="view-details">
-                    查看详情 →
-                </a>
+                <div class="view-details-icon" onclick="alert('该期活动详情页面待开发'); event.stopPropagation();">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                </div>
             </div>
         </div>
         
@@ -524,15 +493,19 @@
                     </div>
                 </div>
                 
-                <a href="#" class="view-details">
-                    查看详情 →
-                </a>
+                <div class="view-details-icon" onclick="alert('该期活动详情页面待开发'); event.stopPropagation();">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                </div>
             </div>
         </div>
         
         <!-- Demo Day 第4期 - 示例 -->
         <div class="activity-card">
-            <div class="event-badge">已结束</div>
+            <div class="status-badge-top">
+                <span class="status-completed">已结束</span>
+            </div>
             <div class="card-header">
                 <div class="event-number">良渚demoday 第 4 期</div>
                 <div class="event-theme">AI产品设计与用户体验</div>
@@ -567,9 +540,11 @@
                     </div>
                 </div>
                 
-                <a href="#" class="view-details">
-                    查看详情 →
-                </a>
+                <div class="view-details-icon" onclick="alert('该期活动详情页面待开发'); event.stopPropagation();">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                </div>
             </div>
         </div>
     </div>
@@ -599,26 +574,20 @@
     </div>
     
     <script>
-        // 添加卡片点击效果
-        document.querySelectorAll('.activity-card').forEach(card => {
+        // 添加卡片点击效果和跳转
+        document.querySelectorAll('.activity-card').forEach((card, index) => {
             card.addEventListener('click', function(e) {
-                // 防止点击链接时重复跳转
-                if (e.target.tagName === 'A' || e.target.closest('.view-details')) {
-                    return;
-                }
-                
                 // 添加点击动画
                 this.style.transform = 'scale(0.98)';
                 setTimeout(() => {
                     this.style.transform = '';
+                    // 只有第一个卡片（第7期）跳转到详情页
+                    if (index === 0) {
+                        window.location.href = 'demoday-detail.html';
+                    } else {
+                        alert('该期活动详情页面待开发');
+                    }
                 }, 150);
-            });
-        });
-        
-        // 防止查看详情链接触发卡片点击
-        document.querySelectorAll('.view-details').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.stopPropagation();
             });
         });
         

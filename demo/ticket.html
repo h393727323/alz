@@ -38,7 +38,7 @@
         }
         
         .app-header .title {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: 600;
             flex: 1;
             text-align: center;
@@ -53,7 +53,7 @@
         }
         
         .content-container {
-            padding: 20px 16px;
+            padding: 20px 8px;
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -108,65 +108,42 @@
         }
         
         .ticket-card {
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
-            border: 1px solid #f0f0f0;
-            margin-bottom: 16px;
-        }
-        
-        .ticket-card::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -8px;
-            width: 16px;
-            height: 16px;
-            background: #f8f9fa;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 2;
-        }
-        
-        .ticket-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: -8px;
-            width: 16px;
-            height: 16px;
-            background: #f8f9fa;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 2;
+            margin-bottom: 20px;
         }
         
         .ticket-header {
-            background: linear-gradient(135deg, #345420 0%, #6aaa3e 100%);
+            background: linear-gradient(135deg, #5a8d32 0%, #6aaa3e 100%);
             color: white;
-            padding: 20px 16px;
+            padding: 16px;
             position: relative;
         }
         
-        .ticket-header::before {
+        /* 虚线分割线压在绿色底部 */
+        .ticket-header::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #345420, #6aaa3e);
+            height: 2px;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.8) 50%, transparent 50%);
+            background-size: 8px 2px;
+            background-repeat: repeat-x;
+            z-index: 2;
         }
         
         .ticket-status-corner {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 12px;
+            right: 12px;
             color: white;
-            padding: 8px 12px;
-            border-radius: 0 16px 0 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
             line-height: 1;
@@ -174,15 +151,16 @@
         }
         
         .ticket-event {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .ticket-theme {
             font-size: 14px;
             opacity: 0.9;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            line-height: 1.3;
         }
         
         .ticket-date {
@@ -195,53 +173,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, #fafbfa 0%, #f5f7f5 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .ticket-body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 20% 20%, rgba(90, 141, 50, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(52, 84, 32, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 40% 70%, rgba(139, 195, 74, 0.02) 0%, transparent 50%),
-                radial-gradient(1px 1px at 15px 15px, rgba(90, 141, 50, 0.08), transparent),
-                radial-gradient(1px 1px at 45px 45px, rgba(52, 84, 32, 0.06), transparent),
-                radial-gradient(1px 1px at 75px 25px, rgba(139, 195, 74, 0.04), transparent);
-            background-size: 30px 30px, 60px 60px, 40px 40px, 30px 30px, 60px 60px, 50px 50px;
-            pointer-events: none;
-        }
-        
-        .ticket-body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(90, 141, 50, 0.1) 50%, transparent 100%);
+            background: #fafafa;
         }
         
         .ticket-info {
             flex: 1;
-            position: relative;
-            z-index: 1;
+            padding-right: 12px;
         }
         
         .ticket-item {
             margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .ticket-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #666;
-            margin-bottom: 2px;
+            font-weight: 500;
         }
         
         .ticket-value {
@@ -251,21 +201,20 @@
         }
         
         .ticket-qr {
-            width: 80px;
-            height: 80px;
-            background: #f5f5f5;
-            border-radius: 8px;
+            width: 60px;
+            height: 60px;
+            background: #ffffff;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #5a8d32;
-            position: relative;
-            z-index: 1;
+            border: 1px solid #e0e0e0;
+            flex-shrink: 0;
         }
         
         .qr-placeholder {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             fill: #5a8d32;
         }
         
@@ -334,7 +283,7 @@
         }
         
         .tab-text {
-            font-size: 12px;
+            font-size: 14px;
             color: #999;
             font-weight: 500;
             transition: color 0.2s ease;
@@ -388,16 +337,16 @@
             <div class="ticket-body">
                 <div class="ticket-info">
                     <div class="ticket-item">
-                        <div class="ticket-label">座位号</div>
-                        <div class="ticket-value">A-052</div>
+                        <span class="ticket-label">座位号</span>
+                        <span class="ticket-value">A-052</span>
                     </div>
                     <div class="ticket-item">
-                        <div class="ticket-label">票券类型</div>
-                        <div class="ticket-value">免费票</div>
+                        <span class="ticket-label">票券类型</span>
+                        <span class="ticket-value">免费票</span>
                     </div>
                     <div class="ticket-item">
-                        <div class="ticket-label">订单号</div>
-                        <div class="ticket-value">DZ20250705001</div>
+                        <span class="ticket-label">订单号</span>
+                        <span class="ticket-value">DZ001</span>
                     </div>
                 </div>
                 
