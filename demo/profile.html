@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>个人中心 - Demo Zoo</title>
+    <title>个人中心 - Demo Day</title>
     <style>
         * {
             margin: 0;
@@ -38,7 +38,7 @@
         }
         
         .app-header .title {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: 600;
             flex: 1;
             text-align: center;
@@ -99,52 +99,60 @@
             flex: 1;
         }
         
-        .user-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 4px;
+        .user-name-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
         }
         
-        .user-email {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 4px;
+        .user-name {
+            font-size: 21px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .name-tag {
+            background: linear-gradient(135deg, #5a8d32 0%, #6aaa3e 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(90, 141, 50, 0.3);
         }
         
         .user-bio {
-            font-size: 12px;
-            color: #999;
-            line-height: 1.3;
-        }
-        
-        .certification-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: linear-gradient(135deg, #5a8d32 0%, #6aaa3e 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            box-shadow: 0 2px 4px rgba(90, 141, 50, 0.3);
-            z-index: 10;
-        }
-        
-        .edit-btn {
-            background: #f5f5f5;
-            border: none;
-            border-radius: 12px;
-            padding: 8px 16px;
             font-size: 14px;
             color: #666;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+        
+        .edit-btn-icon {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
-        .edit-btn:active {
+        .edit-btn-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .edit-btn-icon:active {
             transform: scale(0.95);
             background: #e8e8e8;
         }
@@ -185,7 +193,7 @@
         
         .menu-text {
             flex: 1;
-            font-size: 16px;
+            font-size: 18px;
             color: #333;
         }
         
@@ -198,7 +206,7 @@
         .menu-badge {
             background: #ff4757;
             color: white;
-            font-size: 12px;
+            font-size: 14px;
             padding: 2px 6px;
             border-radius: 8px;
             margin-right: 8px;
@@ -227,13 +235,13 @@
         }
         
         .detail-label {
-            font-size: 14px;
+            font-size: 16px;
             color: #666;
             font-weight: 500;
         }
         
         .detail-value {
-            font-size: 14px;
+            font-size: 16px;
             color: #333;
             font-weight: 600;
         }
@@ -278,7 +286,7 @@
         }
         
         .tab-text {
-            font-size: 12px;
+            font-size: 14px;
             color: #999;
             font-weight: 500;
             transition: color 0.2s ease;
@@ -314,7 +322,7 @@
             text-align: center;
             padding: 20px;
             color: #999;
-            font-size: 12px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -331,32 +339,35 @@
         <!-- 用户信息卡片 -->
         <div class="user-card">
             <div class="user-avatar">
-                <img src="sam.jpg" alt="Sam">
+                <img src="qishifu.jpg" alt="启师傅">
             </div>
             <div class="user-info">
-                <div class="user-name">Sam Johnson</div>
-                <div class="user-email">sam.johnson@example.com</div>
-                <div class="user-bio">Demo Zoo 活跃用户 · 创新爱好者</div>
+                <div class="user-name-container">
+                    <div class="user-name">启师傅</div>
+                    <div class="name-tag">良渚村民</div>
+                </div>
+                <div class="user-bio">良渚demoday发起人</div>
             </div>
-            <div class="certification-badge">
-                良渚村民
-            </div>
-            <button class="edit-btn">编辑</button>
+            <button class="edit-btn-icon">
+                <svg viewBox="0 0 24 24" fill="#666">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+            </button>
         </div>
         
         <!-- 用户详细信息 -->
         <div class="user-details">
             <div class="detail-item">
                 <div class="detail-label">用户ID</div>
-                <div class="detail-value">#DZ20240188</div>
+                <div class="detail-value">#QSF20240001</div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">注册时间</div>
-                <div class="detail-value">2024年5月22日</div>
+                <div class="detail-value">2024年3月15日</div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">手机号</div>
-                <div class="detail-value">186****7766</div>
+                <div class="detail-value">138****8888</div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">所在地</div>
@@ -411,7 +422,7 @@
         
         <!-- 版本信息 -->
         <div class="version-info">
-            Demo Zoo v1.0.0
+            Demo Day v1.0.0
         </div>
     </div>
     
@@ -482,7 +493,7 @@
                         alert('帮助与反馈功能待开发');
                         break;
                     case 'about':
-                        alert('关于我们：Demo Zoo 是一个展示创新项目的平台');
+                        alert('关于我们：Demo Day 是一个展示创新项目的平台');
                         break;
                     default:
                         alert('功能开发中...');
@@ -491,7 +502,7 @@
         });
         
         // 编辑按钮点击事件
-        document.querySelector('.edit-btn').addEventListener('click', function() {
+        document.querySelector('.edit-btn-icon').addEventListener('click', function() {
             alert('编辑个人信息功能待开发');
         });
         

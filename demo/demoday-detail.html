@@ -140,6 +140,13 @@
             margin-bottom: 12px;
         }
         
+        .banner-date-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
         .banner-date {
             font-size: 14px;
             opacity: 0.8;
@@ -147,6 +154,28 @@
             padding: 6px 12px;
             border-radius: 20px;
             display: inline-block;
+        }
+        
+        .detail-icon-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .detail-icon-btn:active {
+            background: rgba(255,255,255,0.3);
+            transform: scale(0.95);
+        }
+        
+        .detail-icon-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
         }
         
         /* 状态标签 */
@@ -541,7 +570,14 @@
             <div class="banner-content">
                 <div class="banner-title">良渚demoday 第7期</div>
                 <div class="banner-subtitle">Go Wild：AI出海与无边界创新</div>
-                <div class="banner-date">2025年7月5日 14:00-18:00</div>
+                <div class="banner-date-row">
+                    <div class="banner-date">2025年7月5日（周六）14:00-18:00</div>
+                    <button class="detail-icon-btn" onclick="scrollToDetails()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -754,6 +790,17 @@
                 history.back();
             } else {
                 window.location.href = 'demoday-gallery.html';
+            }
+        }
+        
+        // 滚动到详情区域
+        function scrollToDetails() {
+            const quickInfo = document.querySelector('.quick-info');
+            if (quickInfo) {
+                quickInfo.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         }
         
