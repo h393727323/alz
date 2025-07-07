@@ -1,0 +1,264 @@
+/* Basic Reset & Font */
+body, h1, h2, h3, p, ul, li, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    color: #333; /* Updated text color */
+    background-color: #f5f7f5; /* Updated background color from demoday5 */
+}
+
+/* Navigation */
+header {
+    border-bottom: 1px solid #d2d2d7;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Add gap for spacing */
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif; /* Tech font */
+    font-style: italic; /* Make it italic */
+    font-size: 1.6em; /* Slightly larger */
+    font-weight: 500; /* Adjust weight for Orbitron */
+    color: #4a7831; /* Lighter green */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.95em;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #6ca03d; /* Lighter hover color */
+}
+
+/* Language Switcher */
+.language-switcher {
+    display: flex;
+    gap: 5px;
+    margin-left: auto; /* Push switcher towards the right, before the apply button */
+}
+
+.language-switcher button {
+    background: none;
+    border: 1px solid #d2d2d7;
+    color: #6e6e73;
+    padding: 4px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.3s ease;
+}
+
+.language-switcher button:hover {
+    border-color: #6ca03d;
+    color: #6ca03d;
+}
+
+.language-switcher button.active {
+    background-color: #6ca03d;
+    color: #ffffff;
+    border-color: #6ca03d;
+}
+
+/* Buttons */
+.cta-button, .cta-button-large {
+    background: linear-gradient(135deg, #4a7831 0%, #7bbe4c 100%); /* Lighter gradient */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 15px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 400;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover, .cta-button-large:hover {
+    background: linear-gradient(135deg, #558d38 0%, #88cc58 100%); /* Lighter hover gradient */
+}
+
+.cta-button-large {
+    padding: 12px 24px;
+    font-size: 1.1em;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 3em; /* Larger heading */
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    color: #4a7831; /* Lighter green */
+}
+
+.hero p {
+    font-size: 1.2em;
+    color: #666; /* Updated from demoday5 */
+    margin-bottom: 30px;
+}
+
+.hero-visual {
+    margin-top: 40px;
+    border-radius: 18px;
+    overflow: hidden; /* Ensure image respects border radius */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Shadow from demoday5 */
+}
+
+.hero-visual img {
+    display: block; /* Remove extra space below image */
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover;
+}
+
+/* Content Sections */
+.content-section {
+    padding: 60px 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: white; /* From demoday5 */
+    border-radius: 16px; /* From demoday5 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* From demoday5 */
+    margin-bottom: 20px;
+}
+
+.content-section h2 {
+    font-size: 2.5em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #4a7831; /* Lighter green */
+}
+
+.content-section p {
+    font-size: 1.1em;
+    color: #333;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+}
+
+.gray-bg {
+    background-color: #f0f9f6; /* Updated from demoday5's break section */
+}
+
+/* Program Features */
+.program-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    text-align: left;
+}
+
+.feature-item {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 2px solid #f0f0f0;
+}
+
+.feature-item h3 {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #6ca03d; /* Lighter green */
+}
+
+.feature-item p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 0;
+}
+
+/* Portfolio Section */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.portfolio-item {
+    border-radius: 18px;
+    overflow: hidden; /* Ensure image respects border radius */
+    border: 2px solid #6ca03d; /* Lighter border color */
+}
+
+.portfolio-item img {
+    display: block; /* Remove extra space below image */
+    width: 100%;
+    height: 100%; /* Fill the container */
+    object-fit: cover; /* Cover the area, cropping if needed */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+    border-top: 1px solid #d2d2d7;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Responsive Adjustments (Basic) */
+@media (max-width: 768px) {
+    nav ul {
+        display: none; /* Hide nav links on smaller screens for simplicity */
+    }
+    /* Keep lang switcher and apply button visible on mobile */
+    .logo {
+        margin-right: auto; /* Push logo to the left */
+    }
+    .language-switcher {
+        margin-right: 10px; /* Add some space between language switcher and apply button */
+    }
+    .hero h1 {
+        font-size: 2.2em;
+    }
+    .hero p {
+        font-size: 1em;
+    }
+    .content-section h2 {
+        font-size: 2em;
+    }
+    .program-features {
+       grid-template-columns: 1fr;
+    }
+} 

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>良渚 Demo Day 第7期</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #345420 0%, #6aaa3e 100%);
+            color: white;
+            padding: 60px 30px 40px;
+            text-align: center;
+        }
+        
+        header .logo-container {
+            margin-top: 60px;
+            margin-bottom: 35px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 30px;
+            margin-top: 15px;
+            font-weight: 500;
+            opacity: 0.9;
+            color: white;
+        }
+        
+        .event-details {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 15px;
+            margin-top: 25px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            opacity: 0.9;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 20px 15px;
+            backdrop-filter: blur(2px);
+            flex: 1;
+            text-align: center;
+        }
+        
+        .detail-item svg {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        .session {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .session-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            color: #333;
+            font-size: 35px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .session-header i {
+            margin-right: 10px;
+            color: #5a8d32;
+        }
+        
+        .session-time {
+            color: #666;
+            font-size: 28px;
+            margin-left: auto;
+        }
+        
+        .agenda-item {
+            background-color: #f5f7f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            margin-right: 10px;
+            color: white;
+            vertical-align: middle;
+            white-space: nowrap;
+            min-width: 110px;
+            text-align: center;
+        }
+        
+        .tag-demo {
+            background-color: #ff6b6b;
+        }
+        
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .agenda-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .agenda-title {
+            font-size: 33px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+            line-height: 1.3;
+        }
+        
+        .product-intro {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #555;
+        }
+        
+        .speaker-info {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            flex-shrink: 0;
+            background-color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .content {
+            flex: 1;
+        }
+        
+        .time {
+            color: #5a8d32;
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 21px;
+        }
+        
+        .title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .speaker {
+            color: #666;
+            font-size: 21px;
+        }
+        
+        .speaker-name {
+            color: #5a8d32;
+            font-weight: 700;
+            font-size: 36px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .content div {
+            font-size: 24px;
+        }
+        
+        .break {
+            background-color: #f0f9f6;
+            text-align: center;
+            padding: 15px;
+            color: #666;
+            font-weight: 500;
+            font-size: 24px;
+        }
+        
+        .icon-clock, .icon-marker, .icon-calendar {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            vertical-align: middle;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .icon-clock {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z'/%3E%3C/svg%3E");
+        }
+        
+        .icon-marker {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z'/%3E%3C/svg%3E");
+        }
+        
+        .icon-calendar {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM5 5v1h14V5H5z'/%3E%3C/svg%3E");
+        }
+        
+        .registration {
+            padding-top: 30px;
+        }
+        
+        .registration h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+            padding-top: 10px;
+        }
+        
+        .notification-bar {
+            background-color: #f0f9f6;
+            color: #345420;
+            text-align: center;
+            padding: 12px;
+            font-size: 22px;
+            font-weight: 500;
+            border-bottom: 1px solid #c5e0b4;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: rotate(15deg) translateY(0);
+            }
+            40% {
+                transform: rotate(15deg) translateY(-10px);
+            }
+            60% {
+                transform: rotate(15deg) translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style="text-align: center; padding-top: 20px; padding-bottom: 20px;">
+                <img src="demo-logo.png" alt="Demo Day Logo" style="max-width: 200px; height: auto; margin-top: 300px;">
+            </div>
+            <h2 style="font-size: 32px; margin-bottom: 15px; font-weight: 500; opacity: 0.9; color: rgb(255, 255, 255);">播客《启师傅AI客厅》线下活动</h2>
+            <h1 style="font-size: 64px; margin-top: 15px; font-weight: 700; color: white;">良渚 Demo Day 第 7 期</h1>
+            <h2 style="font-size: 42px; margin-bottom: 15px; font-weight: 500; opacity: 0.9; color: white;">Go Wild：AI出海与无边界创新</h2>
+            
+            <div style="text-align: center; margin: 50px 0;">
+                <p style="color: white; font-size: 24px; font-weight: 500; margin-bottom: 20px; opacity: 0.9;">联合主办</p>
+                <img src="demo7logo.png" alt="启师傅ai客厅" style="width: 80%; margin-bottom: 30px;">
+                <p style="color: white; font-size: 24px; font-weight: 500; margin-bottom: 20px; opacity: 0.9;">感谢支持</p>
+                <img src="dawuding_logo.png" alt="感谢支持" style="width: 23%;">
+            </div>
+            
+            <div class="event-details">
+                <div class="detail-item">
+                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM5 5v1h14V5H5zm2 8h10v-2H7v2zm0 4h7v-2H7v2z"/></svg>
+                    <span>2025-07-05 周六</span>
+                </div>
+                <div class="detail-item">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span>14:00 - 18:00</span>
+                </div>
+                <div class="detail-item">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span>良渚文化艺术中心</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="session">
+            
+            <div style="text-align: center; margin: 15px 40px; color: #666; font-size: 18px; line-height: 1.3;">
+                
+            </div>
+            
+            <div class="session-header">
+                🌅 上半场
+                <span class="session-time">主题分享</span>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #5a8d32;">主题分享</span>
+                    <div class="agenda-title">《即刻/小宇宙的AI实践和探索》</div>
+                </div>
+                <div class="speaker-info">
+                    <div style="display: flex; gap: 40px; width: 100%;">
+                        <div style="display: flex; align-items: flex-start; flex: 1;">
+                            <div class="avatar">
+                                <img src="zhenzhang.jpg" alt="熊猫镇长">
+                            </div>
+                            <div class="content">
+                                <span class="speaker-name">熊猫镇长</span>
+                                <div>小宇宙App设计总监，</br>播客同传项目负责人</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; flex: 1;">
+                            <div class="avatar">
+                                <img src="jc.jpg" alt="JC">
+                            </div>
+                            <div class="content">
+                                <span class="speaker-name">JC</span>
+                                <div>Kuli Kuli项目负责人</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #5a8d32;">主题分享</span>
+                    <div class="agenda-title">《软件出海创业第一课》</div>
+                </div>
+                <div class="product-intro">从心态误区到实操方法，教你找到全球早期用户，实现产品增长</div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="iris.jpg" alt="生姜Iris">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">生姜Iris</span>
+                        <div>AFFiNE Cofounder（融资1000万美金），福布斯亚洲30U30，出海运营专家，辅导出30+Product Hunt日榜第一</div>
+                    </div>
+                </div>
+            </div>
+            
+
+
+        </div>
+
+        <div class="break" style="text-align: center; padding: 30px; background-color: #f0f9f6; margin: 20px 0; border-radius: 8px;">
+            <h3 style="font-size: 28px; color: #5a8d32; margin-bottom: 15px;">中场茶歇，自由交流</h3>
+        </div>
+
+        <div class="session">
+            <div class="session-header">
+                🌆 下半场
+                <span class="session-time">主题分享 & 产品展示</span>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h4 style="font-size: 36px; color: #5a8d32; margin-bottom: 20px; padding-left: 20px;">🐦 主题分享</h4>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #5a8d32;">主题分享</span>
+                    <div class="agenda-title">《从数字游民到数字村民》</div>
+                </div>
+                <div class="product-intro">在良渚边玩，边打造可爱且流行的健康应用 <img src="growapp_round.png" alt="Grow Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 5px; border-radius: 8px;">Grow</div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="allen.jpg" alt="Allen">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">Allen</span>
+                        <div>良渚文化村村民，Grow 创始人</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #5a8d32;">主题分享</span>
+                    <div class="agenda-title">《AI工具产品出海策略和避坑指南》</div>
+                </div>
+                <div class="product-intro">从技术选型到市场策略，AI产品全球化的实战经验分享</div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="sam.jpg" alt="Sam韩晟">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">Sam韩晟</span>
+                        <div>小影科技&影伙引擎创始人，13 年出海创业经验，产品累计 20 亿海外用户</div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div style="margin: 40px 0 30px;">
+                <h4 style="font-size: 36px; color: #5a8d32; margin-bottom: 20px; padding-left: 20px;">🪑 产品&Demo分享</h4>
+            </div>
+            
+
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #3498db;">产品分享</span>
+                    <div class="agenda-title">《fotox.ai：AI商业化的一些思考和实践》</div>
+                </div>
+                <div class="product-intro">专为电商商家打造的AI图像处理平台，手机随拍一键生成大牌质感电商图</div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="tanghan.jpg" alt="唐晗">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">唐晗</span>
+                        <div>fotox.ai 联合创始人，专注AI产品商业化，打造AI创业温室</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #3498db;">产品分享</span>
+                    <div class="agenda-title">《Chat Memo：自动保存 AI 对话，构建 AI 时代最重要的个人资产》</div>
+                </div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="yize.jpg" alt="一泽Eze">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">一泽Eze</span>
+                        <div>知名提示词工程师，Chat Memo 作者，公众号「一泽Eze」作者</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #3498db;">产品分享</span>
+                    <div class="agenda-title">《知乎直答：你的 AI 知识引擎》</div>
+                </div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="makui.jpg" alt="马奎（Kevin）">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">马奎（Kevin）</span>
+                        <div>知乎直答业务负责人，负责产品、研发团队；原 Magi (Peak Labs) 核心创始成员，参与构建开放信息抽取系统、语义搜索、知识图谱及分布式搜索引擎的全链路研发</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #3498db;">产品分享</span>
+                    <div class="agenda-title">《Dreamoo梦境社交：AI应用产品、营销、商业化的的思考》</div>
+                </div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="adong.jpg" alt="潘志东（阿东）">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">潘志东（阿东）</span>
+                        <div>Dreamoo梦境社交 联创&CMO，小红书独立开发者大赛获奖，八年说唱音乐厂牌主理人，WBC世界咖啡师大赛选手</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="title-wrapper">
+                    <span class="tag" style="background-color: #3498db;">产品分享</span>
+                    <div class="agenda-title">《Second Me：创造你的 AI 身份，Now！》</div>
+                </div>
+                <div class="product-intro">数字分身 Second Me 如何替你连接、放大和表达</div>
+                <div class="speaker-info">
+                    <div class="avatar">
+                        <img src="taofangbo.jpg" alt="陶芳波">
+                    </div>
+                    <div class="content">
+                        <span class="speaker-name">陶芳波</span>
+                        <div>良渚文化村村民，心识宇宙Mindverse创始人，曾任Facebook科学家、达摩院神经符号实验室主任</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="registration" style="padding-bottom: 300px;">
+            <h2 style="text-align: center; margin-bottom: 15px; color: #333;">活动报名</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; margin: 20px 0 30px;">
+                <img src="demoday7_qrcode.png" alt="报名二维码" style="width: 287.5px; height: 287.5px; margin-bottom: 10px;">
+                <p style="color: #666; font-size: 26px; width: 60%; text-align: center;font-weight: bold;">审核制</p>
+                <p style="color: #666; font-size: 24px; width: 60%; text-align: center; ">如果审核通过，小助手联系您购票</p>
+                <p style="color: #a4a4a4; font-size: 24px; width: 60%; text-align: center;">未通过不另行通知敬请谅解 🙏</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

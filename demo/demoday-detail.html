@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>良渚demoday 第7期 - Demo Zoo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 100px;
+        }
+        
+        /* 顶部导航 */
+        .detail-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 1000;
+        }
+        
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .back-btn:active {
+            background: #f0f0f0;
+        }
+        
+        .back-icon {
+            width: 24px;
+            height: 24px;
+            fill: #333;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #5a8d32;
+            flex: 1;
+        }
+        
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .share-btn:active {
+            background: #f0f0f0;
+        }
+        
+        .share-icon {
+            width: 24px;
+            height: 24px;
+            fill: #333;
+        }
+        
+        /* 主要内容 */
+        .detail-content {
+            margin-top: 60px;
+            padding: 0 16px;
+        }
+        
+        /* 活动横幅 */
+        .event-banner {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(135deg, #345420 0%, #5a8d32 50%, #6aaa3e 100%);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .event-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('noise.png') repeat;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .banner-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .banner-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+        }
+        
+        .banner-date {
+            font-size: 14px;
+            opacity: 0.8;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        /* 状态标签 */
+        .status-tag {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #ff4757;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 3;
+        }
+        
+        .status-tag.upcoming {
+            background: #5a8d32;
+        }
+        
+        .status-tag.latest {
+            background: #ff6b47;
+        }
+        
+        /* 快速信息卡片 */
+        .quick-info {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            fill: #5a8d32;
+            flex-shrink: 0;
+        }
+        
+        .info-text {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 2px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        /* 活动描述 */
+        .event-description {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-icon {
+            width: 20px;
+            height: 20px;
+            fill: #5a8d32;
+        }
+        
+        .description-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 16px;
+        }
+        
+        .highlight-text {
+            background: rgba(90, 141, 50, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #5a8d32;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        /* 讲者议程 */
+        .agenda-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .agenda-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .agenda-item:last-child {
+            border-bottom: none;
+        }
+        
+        .agenda-time {
+            flex-shrink: 0;
+            width: 60px;
+            text-align: center;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #5a8d32;
+        }
+        
+        .agenda-content {
+            flex: 1;
+        }
+        
+        .agenda-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .agenda-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .agenda-speaker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(90, 141, 50, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+        
+        .agenda-speaker-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .agenda-speaker-info {
+            flex: 1;
+        }
+        
+        .agenda-speaker-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .agenda-speaker-title {
+            font-size: 12px;
+            color: #5a8d32;
+            font-weight: 500;
+        }
+        
+        .agenda-item.general {
+            background: rgba(240, 240, 240, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 8px 0;
+        }
+        
+        .agenda-item.general .agenda-time {
+            background: #e8e8e8;
+            color: #666;
+        }
+        
+        /* 地点详情 */
+        .location-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .location-info {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .location-icon {
+            width: 24px;
+            height: 24px;
+            fill: #5a8d32;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        
+        .location-details {
+            flex: 1;
+        }
+        
+        .location-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .location-address {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .map-placeholder {
+            height: 120px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+        
+        /* 报名按钮 */
+        .registration-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px;
+            border-top: 1px solid #e0e0e0;
+            z-index: 1000;
+        }
+        
+        .registration-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .price-info {
+            color: #333;
+        }
+        
+        .price-label {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .price-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #5a8d32;
+        }
+        
+        .capacity-info {
+            text-align: right;
+            color: #666;
+        }
+        
+        .capacity-label {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .capacity-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .register-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #5a8d32 0%, #6aaa3e 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(90, 141, 50, 0.3);
+        }
+        
+        .register-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(90, 141, 50, 0.3);
+        }
+        
+        .register-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* 底部安全区域 */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .registration-section {
+                padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            }
+        }
+        
+        /* 加载动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .detail-content > * {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 375px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="detail-header">
+        <button class="back-btn" onclick="history.back()">
+            <svg class="back-icon" viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+        </button>
+        <div class="header-title">活动详情</div>
+        <button class="share-btn" onclick="shareEvent()">
+            <svg class="share-icon" viewBox="0 0 24 24">
+                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.50-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="detail-content">
+        <!-- 活动横幅 -->
+        <div class="event-banner">
+            <div class="status-tag upcoming">即将开始</div>
+            <div class="banner-content">
+                <div class="banner-title">良渚demoday 第7期</div>
+                <div class="banner-subtitle">Go Wild：AI出海与无边界创新</div>
+                <div class="banner-date">2025年7月5日 14:00-18:00</div>
+            </div>
+        </div>
+        
+        <!-- 快速信息 -->
+        <div class="quick-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <svg class="info-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <div class="info-text">
+                        <div class="info-label">地点</div>
+                        <div class="info-value">良渚文化艺术中心</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <svg class="info-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 14c-2.67 0-8-1.34-8-4v-2c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v2c0 2.66-5.33 4-8 4z"/>
+                    </svg>
+                    <div class="info-text">
+                        <div class="info-label">时长</div>
+                        <div class="info-value">4小时</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <svg class="info-icon" viewBox="0 0 24 24">
+                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM4 7v2h16V7H4zm2 10v2h12v-2H6z"/>
+                    </svg>
+                    <div class="info-text">
+                        <div class="info-label">主办方</div>
+                        <div class="info-value">启师傅AI客厅</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <svg class="info-icon" viewBox="0 0 24 24">
+                        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                    </svg>
+                    <div class="info-text">
+                        <div class="info-label">规模</div>
+                        <div class="info-value">80人</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 活动描述 -->
+        <div class="event-description">
+            <div class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+                活动简介
+            </div>
+            <div class="description-text">
+                在全球化浪潮中，AI技术正在重塑跨境创新的边界。本期Demo Day聚焦"Go Wild：AI出海与无边界创新"主题，邀请在AI出海领域有杰出表现的创业者和投资人，分享他们的实战经验与前沿洞察。
+            </div>
+            <div class="description-text">
+                我们将深入探讨AI产品如何在全球市场中找到定位，如何克服文化差异和技术壁垒，以及如何构建可持续的国际化商业模式。
+            </div>
+            <div class="highlight-text">
+                💡 适合人群：AI创业者、产品经理、投资人、对出海感兴趣的技术人员
+            </div>
+        </div>
+        
+        <!-- 讲者议程 -->
+        <div class="agenda-section">
+            <div class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24">
+                    <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.98 2.98 0 0 0 17.14 6H16.5c-.8 0-1.54.5-1.84 1.26L12 16l-2.66-8.74A2.001 2.001 0 0 0 7.5 6H6.86A2.98 2.98 0 0 0 4.04 8.37L1.5 16H4v6h2v-6h2l2.5-8.5L12 14l1.5-6.5L16 16h2z"/>
+                </svg>
+                讲者议程
+            </div>
+            
+            <div class="agenda-item general">
+                <div class="agenda-time">14:00</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">签到 & 欢迎茶歇</div>
+                    <div class="agenda-desc">现场签到，领取活动资料，与其他参会者交流</div>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="agenda-time">14:30</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">主题演讲：AI出海的机遇与挑战</div>
+                    <div class="agenda-desc">深入探讨AI产品全球化的核心策略，分享出海成功案例与避坑指南</div>
+                    <div class="agenda-speaker">
+                        <img src="allen.jpg" alt="Allen Chen" class="agenda-speaker-avatar">
+                        <div class="agenda-speaker-info">
+                            <div class="agenda-speaker-name">Allen Chen</div>
+                            <div class="agenda-speaker-title">TechGlobal 创始人 · AI产品全球化专家</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="agenda-time">15:15</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">技术分享：跨境AI架构设计</div>
+                    <div class="agenda-desc">讲解国际化技术架构的最佳实践，多地区部署与数据合规解决方案</div>
+                    <div class="agenda-speaker">
+                        <img src="patrick.jpg" alt="Patrick Wu" class="agenda-speaker-avatar">
+                        <div class="agenda-speaker-info">
+                            <div class="agenda-speaker-name">Patrick Wu</div>
+                            <div class="agenda-speaker-title">InnovateAI 首席架构师 · 国际化技术专家</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="agenda-item general">
+                <div class="agenda-time">16:00</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">茶歇 & 自由交流</div>
+                    <div class="agenda-desc">与讲者和参会者深度交流，建立联系，享受精美茶点</div>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="agenda-time">16:30</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">投资视角：AI出海项目评估</div>
+                    <div class="agenda-desc">从投资人角度分析AI出海项目的价值评估标准和投资机会</div>
+                    <div class="agenda-speaker">
+                        <img src="tanghan.jpg" alt="Tang Han" class="agenda-speaker-avatar">
+                        <div class="agenda-speaker-info">
+                            <div class="agenda-speaker-name">Tang Han</div>
+                            <div class="agenda-speaker-title">GlobalVentures 投资总监 · 海外市场专家</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <div class="agenda-time">17:15</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">圆桌论坛：无边界创新实践</div>
+                    <div class="agenda-desc">所有讲者参与，深度讨论AI出海的实战经验与未来趋势</div>
+                    <div class="agenda-speaker">
+                        <img src="yubo.jpg" alt="Yubo Liu" class="agenda-speaker-avatar">
+                        <div class="agenda-speaker-info">
+                            <div class="agenda-speaker-name">Yubo Liu 主持</div>
+                            <div class="agenda-speaker-title">CrossBorder 运营总监 · 跨境AI专家</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="agenda-item general">
+                <div class="agenda-time">18:00</div>
+                <div class="agenda-content">
+                    <div class="agenda-title">活动结束 & 合影留念</div>
+                    <div class="agenda-desc">总结分享，互换联系方式，期待下次相聚</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 地点详情 -->
+        <div class="location-section">
+            <div class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                活动地点
+            </div>
+            <div class="location-info">
+                <svg class="location-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <div class="location-details">
+                    <div class="location-name">良渚文化艺术中心</div>
+                    <div class="location-address">
+                        浙江省杭州市余杭区良渚街道美丽洲路1号<br>
+                        地铁：良渚站A出口步行5分钟<br>
+                        停车：现场提供免费停车位
+                    </div>
+                </div>
+            </div>
+            <div class="map-placeholder">
+                📍 点击查看地图导航
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部报名区域 -->
+    <div class="registration-section">
+        <div class="registration-info">
+            <div class="price-info">
+                <div class="price-label">活动费用</div>
+                <div class="price-value">免费</div>
+            </div>
+            <div class="capacity-info">
+                <div class="capacity-label">剩余名额</div>
+                <div class="capacity-value">23 / 80</div>
+            </div>
+        </div>
+        <button class="register-btn" onclick="registerEvent()">
+            立即报名参加
+        </button>
+    </div>
+    
+    <script>
+        // 返回按钮功能
+        function goBack() {
+            if (document.referrer) {
+                history.back();
+            } else {
+                window.location.href = 'demoday-gallery.html';
+            }
+        }
+        
+        // 分享功能
+        function shareEvent() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '良渚demoday 第7期 - Go Wild：AI出海与无边界创新',
+                    text: '邀请您参加Demo Zoo的精彩活动！',
+                    url: window.location.href
+                });
+            } else {
+                // 复制链接到剪贴板
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('链接已复制到剪贴板！');
+                });
+            }
+        }
+        
+        // 报名功能
+        function registerEvent() {
+            // 模拟报名流程
+            const confirmation = confirm('确认报名参加"良渚demoday 第7期"活动吗？');
+            if (confirmation) {
+                alert('报名成功！我们将发送确认邮件给您。');
+                // 这里可以添加实际的报名逻辑
+                updateRegistrationStatus();
+            }
+        }
+        
+        // 更新报名状态
+        function updateRegistrationStatus() {
+            const registerBtn = document.querySelector('.register-btn');
+            const capacityValue = document.querySelector('.capacity-value');
+            
+            registerBtn.textContent = '已报名';
+            registerBtn.disabled = true;
+            
+            // 更新剩余名额
+            const currentCapacity = parseInt(capacityValue.textContent.split(' / ')[0]);
+            capacityValue.textContent = `${currentCapacity - 1} / 80`;
+        }
+        
+        // 地图点击功能
+        document.querySelector('.map-placeholder').addEventListener('click', function() {
+            const address = '良渚文化艺术中心,浙江省杭州市余杭区良渚街道美丽洲路1号';
+            if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
+                window.open(`http://maps.apple.com/?q=${encodeURIComponent(address)}`);
+            } else {
+                window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`);
+            }
+        });
+        
+        // 讲者卡片点击效果
+        document.querySelectorAll('.speaker-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const speakerName = this.querySelector('.speaker-name').textContent;
+                alert(`点击了讲者：${speakerName}\n（这里可以跳转到讲者详情页）`);
+            });
+        });
+        
+        // 页面加载动画
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+        
+        // 防止iOS Safari的弹性滚动
+        let startY = 0;
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            const currentY = e.touches[0].clientY;
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+            
+            // 阻止页面过度滚动
+            if ((scrollTop <= 0 && currentY > startY) || 
+                (scrollTop >= scrollHeight - clientHeight && currentY < startY)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html> 

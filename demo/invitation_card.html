@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邀请函 - 良渚 Demo Day 第7期</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f5;
+            padding: 20px;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .invitation-card {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #345420 0%, #6aaa3e 100%);
+            color: white;
+            padding: 40px 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.08)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .invitation-title {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-container {
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .event-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .event-subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.9;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card-body {
+            padding: 50px 40px;
+        }
+        
+        .recipient {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0f9f6 0%, #e8f5e8 100%);
+            border-radius: 15px;
+            border: 2px solid #c5e0b4;
+        }
+        
+        .recipient-label {
+            font-size: 20px;
+            color: #5a8d32;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .recipient-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #345420;
+            margin-bottom: 8px;
+        }
+        
+        .recipient-company {
+            font-size: 24px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .invitation-text {
+            text-align: center;
+            font-size: 20px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+        
+        .event-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 15px;
+            background-color: #f9faf9;
+            border-radius: 12px;
+            border: 1px solid #e8f0e8;
+        }
+        
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 15px;
+            fill: #5a8d32;
+        }
+        
+        .detail-label {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+        
+        .hosts-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hosts-title {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .hosts-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            background: linear-gradient(135deg, #345420 0%, #6aaa3e 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .contact-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .qr-code {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .qr-text {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .qr-text p {
+            margin-bottom: 8px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .decoration::before {
+            content: '🌟';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .invitation-card {
+                margin: 10px;
+            }
+            
+            .card-header, .card-body {
+                padding: 30px 20px;
+            }
+            
+            .event-details {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .qr-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .qr-text {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-card">
+        <div class="card-header">
+            <div class="decoration"></div>
+            <div class="invitation-title">诚挚邀请</div>
+            <div class="logo-container">
+                <img src="demo-logo.png" alt="Demo Day Logo" style="max-width: 180px; height: auto;">
+            </div>
+            <div class="event-title">良渚 Demo Day 第 7 期</div>
+            <div class="event-subtitle">Go Wild：AI出海与无边界创新</div>
+        </div>
+        
+        <div class="card-body">
+            <div class="recipient">
+                <div class="recipient-label">特别邀请</div>
+                <div class="recipient-name">鲍声美 女士</div>
+                <div class="recipient-company">北京达佳互联信息技术有限公司</div>
+            </div>
+            
+            <div class="invitation-text">
+                我们非常荣幸地邀请您参加<strong>良渚 Demo Day 第7期</strong>活动。<br>
+                本次活动汇聚了AI领域的创新者和实践者，<br>
+                将为您带来最前沿的技术分享和深度的行业洞察。<br>
+                期待与您共同探索AI出海与无边界创新的无限可能！
+            </div>
+            
+            <div class="event-details">
+                <div class="detail-item">
+                    <svg class="detail-icon" viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM5 5v1h14V5H5zm2 8h10v-2H7v2zm0 4h7v-2H7v2z"/>
+                    </svg>
+                    <div class="detail-label">活动日期</div>
+                    <div class="detail-value">2025年7月5日<br>周六</div>
+                </div>
+                <div class="detail-item">
+                    <svg class="detail-icon" viewBox="0 0 24 24">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <div class="detail-label">活动时间</div>
+                    <div class="detail-value">14:00 - 18:00</div>
+                </div>
+                <div class="detail-item">
+                    <svg class="detail-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <div class="detail-label">活动地点</div>
+                    <div class="detail-value">良渚文化艺术中心</div>
+                </div>
+            </div>
+            
+            <div class="hosts-section">
+                <div class="hosts-title">联合主办</div>
+                <div class="hosts-logos">
+                    <img src="demo7logo.png" alt="联合主办方" style="height: 60px;">
+                </div>
+                <div style="margin-top: 15px;">
+                    <span style="font-size: 14px; color: #666;">感谢支持：</span>
+                    <img src="dawuding_logo.png" alt="支持方" style="height: 40px; margin-left: 10px;">
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-title">报名方式</div>
+                <div class="qr-container">
+                    <div class="qr-code">
+                        <img src="demoday7_qrcode.png" alt="报名二维码" style="width: 150px; height: 150px;">
+                    </div>
+                    <div class="qr-text">
+                        <p><strong>扫码报名参加</strong></p>
+                        <p>本活动采用审核制</p>
+                        <p>审核通过后小助手将联系您购票</p>
+                        <p style="opacity: 0.7; font-size: 14px;">期待您的参与！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
